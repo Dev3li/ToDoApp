@@ -1,0 +1,6 @@
+@import "tailwindcss";
+/* define font */
+@theme {
+  --font-manrope: 'ManropeCustom', sans-serif;
+  --font-inter: 'InterVariable', sans-serif;
+}
