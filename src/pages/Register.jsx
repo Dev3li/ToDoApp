@@ -2,8 +2,24 @@ import { Link } from "react-router-dom";
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import Logo from "../shared/Logo";
+import toast from "react-hot-toast";
+import { useState } from "react";
+
 
 export default function Register() {
+  const [form,setForm] = useState({userName:'',email:'',password:''})
+  // Handel Form Validation 
+  function handelValidation(){
+    if(form.userName.trim() === '' &&  form.email.trim() === '' && form.password.trim() === '') return 
+    let rxName = /^[a-zA-Z ]{3,20}$/;
+    let rxEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    let rxPass = /^.{8,}$/;
+    
+    rxName.test(form.userName)? '' : toast("Name not Validation")
+    rxEmail.test(form.email)? '' : toast("Email not Validation")
+    rxPass.test(form.password)? '' : toast("PassWord Must Be 8 Char")
+  }
+  
   return (
     <>
       {/* Bg Lg */}
@@ -83,40 +99,61 @@ export default function Register() {
           {/* form */}
           <div className="flex items-center justify-center">
             <div className="h-screen lg:h-fit w-111 flex justify-center  items-center flex-col bg-white  lg:p-12 ">
+              {/* Title Page */}
               <div className=" self-start mb-10  ps-5 lg:ps-0 md:ps-0 ">
                 <h2 className="font-manrope font-bold text-blue-900  text-3xl " >Create Account</h2>
                 <p className="font-inter text-gray-500">Join the community of intentional builders.</p>
               </div>
+              {/* ==========Form========= */}
               <form
                 className="flex flex-col justify-center items-center"
                 onSubmit={(e) => {
                   e.preventDefault();
+                  // toast("wait please!")
+                  handelValidation()
                 }}
               >
+                {/* User Name */}
                 <div>
                   <Input
+                  name={'userName'}
+                  inputType={form.userName}
+                  form={form}
+                  setForm={setForm}
                     placeholder={"Dexter Morgan"}
                     type={"text"}
                     label={"Full Name"}
                   />
                 </div>
+                {/* Email */}
                 <div className="mt-1">
                   <Input
+                  name={'email'}
+                  inputType={form.email}
+                  form={form}
+                  setForm={setForm}
                     placeholder={"name@company.com"}
                     type={"text"}
                     label={"Email Address"}
                   />
                 </div>
+                {/* Password */}
                 <div className="mt-1 ">
                   <Input
+                  name={'password'}
+                  inputType={form.password}
+                  form={form}
+                  setForm={setForm}
                     placeholder={"●●●●●●"}
                     type={"password"}
                     label={"Password"}
                   />
                 </div>
-                <p className="mb-8 text-[11px] self-start text-gray-400 mt-1">At least 8 characters with one uppercase and one symbol.</p>
+                <p className="mb-8 text-[11px] self-start text-gray-400 mt-1">At least 8 characters, The Best with one uppercase and one symbol.</p>
                 <Button>Create Account</Button>
               </form>
+              {/* ==========Form========= */}
+
               <p className=" font-inter font-semibold text-[12px] mt-6 text-gray-500">
                 Already have an account?{" "}
                 <Link to={"/login"}>

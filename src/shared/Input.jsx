@@ -1,7 +1,19 @@
-import { useState } from "react";
+import {  useState } from "react";
 
-export default function Input({ placeholder, type, label }) {
+export default function Input({ placeholder,inputType, name,form,setForm, type, label }) {
   const [show, showed] = useState(type);
+
+  function handelFormInput(value){
+    if(name === 'userName')
+    { 
+      setForm({...form,userName: value})
+    }else if(name === 'email'){
+      setForm({...form,email: value})
+    }else if(name === 'password')
+    {
+      setForm({...form,password: value})
+    }
+  }
 
   function Icon() {
     if (show === "text") {
@@ -53,6 +65,10 @@ export default function Input({ placeholder, type, label }) {
             {label}
           </label>
           <input
+            value={inputType}
+            onChange={(e) => {
+              handelFormInput(e.target.value)
+            }}
             type={show}
             placeholder={placeholder}
             className="w-86 h-12 px-4 pb-3.5 mt-1 pt-2.5 text-gray-700 bg-blue-100 rounded-lg placeholder: placeholder:text-[#C2C7D1] focus:outline-none focus:border-none "
@@ -69,7 +85,6 @@ export default function Input({ placeholder, type, label }) {
             } else {
               showed("text");
             }
-            console.log(show);
           }}
         >
           {Icon()}
