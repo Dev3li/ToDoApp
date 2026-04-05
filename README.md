@@ -1,16 +1,125 @@
-# React + Vite
+# Todo List (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A frontend Todo List project built with React and Vite.
 
-Currently, two official plugins are available:
+This repository currently includes:
+- Authentication screens (`Login`, `Register`)
+- A dashboard layout with sidebar navigation
+- LocalStorage-based auth/account persistence
+- Shared UI components and font setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- React 19
+- Vite 8
+- React Router DOM 7
+- Tailwind CSS 4 (`@tailwindcss/vite`)
+- Heroicons
+- React Hot Toast
+- NanoID
+- ESLint 9
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Installation
 
-## Expanding the ESLint configuration
+### Requirements
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Node.js 18+ (recommended: latest LTS)
+- npm (comes with Node.js)
+
+### Steps
+
+1. Clone the repository.
+2. Open the project folder.
+3. Install dependencies:
+
+```bash
+npm install
+```
+
+4. Start development server:
+
+```bash
+npm run dev
+```
+
+5. Open the local URL shown in terminal (usually `http://localhost:5173`).
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Run ESLint
+
+## Current Routes
+
+- `/` -> Login page
+- `/login` -> Login page
+- `/signup` -> Register page
+- `/dashboard` -> Dashboard page
+
+## Current Project Structure
+
+```text
+.
+├── public/
+│   ├── favicon.svg
+│   ├── icons.svg
+│   └── fonts/
+│       ├── Inter/
+│       │   └── Inter-VariableFont.ttf
+│       └── Manrope/
+│           ├── Manrope-Bold.ttf
+│           ├── Manrope-ExtraBold.ttf
+│           ├── Manrope-ExtraLight.ttf
+│           ├── Manrope-Light.ttf
+│           ├── Manrope-Medium.ttf
+│           ├── Manrope-Regular.ttf
+│           └── Manrope-SemiBold.ttf
+├── src/
+│   ├── features/
+│   │   ├── auth/
+│   │   │   ├── context/
+│   │   │   │   └── AuthContext.jsx
+│   │   │   ├── services/
+│   │   │   │   └── authService.jsx
+│   │   │   └── authReducer.jsx
+│   │   ├── dashboard/
+│   │   │   └── pages/
+│   │   │       └── dashboard.jsx
+│   │   ├── settings/
+│   │   │   └── pages/
+│   │   │       └── settings.jsx
+│   │   └── tasks/
+│   │       └── pages/
+│   │           ├── editTask.jsx
+│   │           ├── newTask.jsx
+│   │           └── task.jsx
+│   ├── pages/
+│   │   ├── Dashboard.jsx
+│   │   ├── Login.jsx
+│   │   └── Register.jsx
+│   ├── shared/
+│   │   ├── Button.jsx
+│   │   ├── ButtonNav.jsx
+│   │   ├── Input.jsx
+│   │   ├── Logo.jsx
+│   │   └── slidBar.jsx
+│   ├── styles/
+│   │   ├── App.css
+│   │   ├── fonts.css
+│   │   └── index.css
+│   ├── App.jsx
+│   └── main.jsx
+├── eslint.config.js
+├── index.html
+├── package-lock.json
+├── package.json
+├── README.md
+└── vite.config.js
+```
+
+## Notes
+
+- Auth data is currently stored in browser LocalStorage using keys: `Accounts` and `user`.
+- Some feature page files exist as placeholders and are currently empty.
