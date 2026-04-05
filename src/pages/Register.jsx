@@ -3,23 +3,48 @@ import Button from "../shared/Button";
 import Input from "../shared/Input";
 import Logo from "../shared/Logo";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useReducer, useState } from "react";
+import { nanoid } from "nanoid";
+import {Reducer} from "../features/auth/authReducer";
+import { getAccounts } from "../features/auth/services/authService";
 
 
 export default function Register() {
-  const [form,setForm] = useState({userName:'',email:'',password:''})
-  // Handel Form Validation 
-  function handelValidation(){
-    if(form.userName.trim() === '' &&  form.email.trim() === '' && form.password.trim() === '') return 
+  const [form, setForm] = useState({ userName: "", email: "", password: "" });
+  const [state, disPatch] = useReducer(Reducer, getAccounts());
+  
+  // Handel Form Validation
+  function handelValidation() {
+    if (
+      form.userName.trim() === "" &&
+      form.email.trim() === "" &&
+      form.password.trim() === ""
+    )
+      return false;
     let rxName = /^[a-zA-Z ]{3,20}$/;
     let rxEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     let rxPass = /^.{8,}$/;
-    
-    rxName.test(form.userName)? '' : toast("Name not Validation")
-    rxEmail.test(form.email)? '' : toast("Email not Validation")
-    rxPass.test(form.password)? '' : toast("PassWord Must Be 8 Char")
+
+    let userName = rxName.test(form.userName);
+    let email = rxEmail.test(form.email);
+    let password = rxPass.test(form.password);
+    userName ? "" : toast("Name not Validation");
+    email ? "" : toast("Email not Validation");
+    password ? "" : toast("PassWord Must Be 8 Char");
+    if (userName && email && password) return true;
   }
-  
+
+  function handelNewUser(handel) {
+    if (handel) {
+      disPatch({
+        name: form.userName,
+        email: form.email,
+        password: form.password,
+        id: nanoid(),
+      });
+    }
+  }
+
   return (
     <>
       {/* Bg Lg */}
@@ -43,57 +68,60 @@ export default function Register() {
                   architectural clarity.
                 </p>
               </div>
-                <div className="flex">
-                     <div className="w-57.5 p-5 bg-black/10  rounded-2xl">
-                <div className="mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-8 text-gray-300"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
-                    />
-                  </svg>
+              <div className="flex">
+                <div className="w-57.5 p-5 bg-black/10  rounded-2xl">
+                  <div className="mb-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-8 text-gray-300"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"
+                      />
+                    </svg>
+                  </div>
+                  <p className="text-white font-manrope font-bold text-[14px] ">
+                    Intelligent Layering
+                  </p>
+                  <p className="font-inter font-regular text-gray-400 text-[14px]">
+                    Focus on what matters with our tonal depth system.
+                  </p>
                 </div>
-                <p className="text-white font-manrope font-bold text-[14px] ">
-                  Intelligent Layering
-                </p>
-                <p className="font-inter font-regular text-gray-400 text-[14px]">
-                  Focus on what matters with our tonal depth system.
-                </p>
+                <div className="w-57.5 p-5 bg-black/10 ms-5 rounded-2xl">
+                  <div className="mb-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-8 text-gray-300"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+                      />
+                    </svg>
+                  </div>
+                  <p className="text-white font-manrope font-bold text-[14px] ">
+                    Frictionless Speed
+                  </p>
+                  <p className="font-inter font-regular  text-gray-400 text-[14px]">
+                    Built for high-velocity execution and rapid tasking.
+                  </p>
+                </div>
               </div>
-              <div className="w-57.5 p-5 bg-black/10 ms-5 rounded-2xl">
-                <div className="mb-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-8 text-gray-300"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
-                    />
-                  </svg>
-                </div>
-                <p className="text-white font-manrope font-bold text-[14px] ">
-                  Frictionless Speed
-                </p>
-                <p className="font-inter font-regular  text-gray-400 text-[14px]">
-                  Built for high-velocity execution and rapid tasking.
-                </p>
-              </div>
-                </div>
-              <p className="text-blue-400/60 font-inter font-regular absolute bottom-9 text-[14px]">© 2026 Methodical Inc.  <span className="text-[7px]">●</span> Privacy First Architecture</p>
+              <p className="text-blue-400/60 font-inter font-regular absolute bottom-9 text-[14px]">
+                © 2026 Methodical Inc. <span className="text-[7px]">●</span>{" "}
+                Privacy First Architecture
+              </p>
             </div>
           </div>
           {/* form */}
@@ -101,8 +129,12 @@ export default function Register() {
             <div className="h-screen lg:h-fit w-111 flex justify-center  items-center flex-col bg-white  lg:p-12 ">
               {/* Title Page */}
               <div className=" self-start mb-10  ps-5 lg:ps-0 md:ps-0 ">
-                <h2 className="font-manrope font-bold text-blue-900  text-3xl " >Create Account</h2>
-                <p className="font-inter text-gray-500">Join the community of intentional builders.</p>
+                <h2 className="font-manrope font-bold text-blue-900  text-3xl ">
+                  Create Account
+                </h2>
+                <p className="font-inter text-gray-500">
+                  Join the community of intentional builders.
+                </p>
               </div>
               {/* ==========Form========= */}
               <form
@@ -110,16 +142,18 @@ export default function Register() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   // toast("wait please!")
-                  handelValidation()
+                  let handel = handelValidation();
+                  handelNewUser(handel);
+                  console.log(handel);
                 }}
               >
                 {/* User Name */}
                 <div>
                   <Input
-                  name={'userName'}
-                  inputType={form.userName}
-                  form={form}
-                  setForm={setForm}
+                    name={"userName"}
+                    inputType={form.userName}
+                    form={form}
+                    setForm={setForm}
                     placeholder={"Dexter Morgan"}
                     type={"text"}
                     label={"Full Name"}
@@ -128,10 +162,10 @@ export default function Register() {
                 {/* Email */}
                 <div className="mt-1">
                   <Input
-                  name={'email'}
-                  inputType={form.email}
-                  form={form}
-                  setForm={setForm}
+                    name={"email"}
+                    inputType={form.email}
+                    form={form}
+                    setForm={setForm}
                     placeholder={"name@company.com"}
                     type={"text"}
                     label={"Email Address"}
@@ -140,16 +174,19 @@ export default function Register() {
                 {/* Password */}
                 <div className="mt-1 ">
                   <Input
-                  name={'password'}
-                  inputType={form.password}
-                  form={form}
-                  setForm={setForm}
+                    name={"password"}
+                    inputType={form.password}
+                    form={form}
+                    setForm={setForm}
                     placeholder={"●●●●●●"}
                     type={"password"}
                     label={"Password"}
                   />
                 </div>
-                <p className="mb-8 text-[11px] self-start text-gray-400 mt-1">At least 8 characters, The Best with one uppercase and one symbol.</p>
+                <p className="mb-8 text-[11px] self-start text-gray-400 mt-1">
+                  At least 8 characters, The Best with one uppercase and one
+                  symbol.
+                </p>
                 <Button>Create Account</Button>
               </form>
               {/* ==========Form========= */}
