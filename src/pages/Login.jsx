@@ -22,7 +22,7 @@ export default function Login() {
       disPatch({ type: "" });
       console.log("ali2");
     }
-  }, [state]);
+  }, );
 
   function handelLogin() {
     if (form.email.trim() === "" && form.password.trim() === "") {
@@ -79,7 +79,7 @@ export default function Login() {
               />
             </div>
 
-            <Button>Log In</Button>
+            <Button w={'w-86'} h={'h-14'}>Log In</Button>
           </form>
           {/*   */}
           <p className="text-blue-800 text-[12px] cursor-pointer font-inter font-semibold mt-4 mb-8">

@@ -187,7 +187,7 @@ export default function Register() {
                   At least 8 characters, The Best with one uppercase and one
                   symbol.
                 </p>
-                <Button>Create Account</Button>
+                <Button w={'w-86'} h={'h-14'}>Create Account</Button>
               </form>
               {/* ==========Form========= */}
 

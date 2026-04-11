@@ -5,25 +5,26 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import { Toaster } from "react-hot-toast";
 import { User } from "./features/auth/context/AuthContext";
+import NewTask from "./features/tasks/pages/newTask";
 
 //  For Handel Pages (Login..inc)
 // this page for handel page , by roouter = it's move you to the page what you need , or
 // page you must view to you , if you login by you account ,dashboard page will view , if not have accout or you signOut
 // the Login page view to you.
 function App() {
-
-  
   return (
     <>
-        <div>
-          <Toaster />
-          <Routes>
-            <Route path="/" element={<Login />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </div>
+      <div>
+        <Toaster />
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />}>
+            <Route path="newtask" element={<NewTask />} />
+          </Route>
+        </Routes>
+      </div>
     </>
   );
 }

@@ -4,7 +4,7 @@ import {
   FolderIcon,
   Cog6ToothIcon,
   ArchiveBoxIcon
-} from "@heroicons/react/16/solid";
+} from "@heroicons/react/24/outline";
 
 export function ButtonNav({ children, active, onClick }) {
 
